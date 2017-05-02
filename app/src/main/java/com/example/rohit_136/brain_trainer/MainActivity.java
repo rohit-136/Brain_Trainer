@@ -1,14 +1,19 @@
 package com.example.rohit_136.brain_trainer;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.sax.RootElement;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,17 +26,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     Button startbutton;
-    Button button1,button2,button3,add,sub,mul;
+    Button button1,button2,button3,add,sub,mul,div;
     Button yesbutton;
     Button nobutton;
     Button button4;
-   // Button playagainbutton;
     TextView resluttextview;
     TextView pointtextView;
     TextView sumtextview;
     TextView timertextview;
     TextView playgn;
+    ImageView imageView;
     RelativeLayout mainrelativelayout,optionRelativeLayout;
+    Vibrator v;
+    //MediaPlayer mediaPlayer;
     //generalrelativelayout is the layout of the science questions.
     //mainrelativelayout is the layout of the maths questions.
     ArrayList<Integer> arr = new ArrayList<>();
@@ -59,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
             generateSubtractionQuestion();
         if(tag==6)
             generateMultiplicationQuestion();
+        if(tag==7)
+            generateDivisionQuestion();
 
 
         new CountDownTimer(30100,1000)
@@ -76,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 playgn.setVisibility(View.VISIBLE);
                 yesbutton.setVisibility(View.VISIBLE);
                 nobutton.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.INVISIBLE);
                 resluttextview.setText("Your Score: " + Integer.toString(correct)+"/"+Integer.toString(noOfQues));
+                MediaPlayer mplayer = MediaPlayer.create(getApplicationContext(), R.raw.buzzer);
+                mplayer.start();
                 //mainrelativelayout.setVisibility(View.INVISIBLE);
                 //startbutton.setVisibility(Button.VISIBLE);
 
@@ -103,12 +115,13 @@ public class MainActivity extends AppCompatActivity {
             //Log.i("Result","Correct Answer");
             correct++;
             noOfQues++;
-            resluttextview.setText("Correct!");
+            correct();
         }
         else
         {
             //Log.i("Result","Incorrect Answer");
-            resluttextview.setText("Incorrect!");
+            //resluttextview.setText("Incorrect!");
+            incorrect();
             noOfQues++;
         }
         pointtextView.setText(Integer.toString(correct)+"/"+Integer.toString(noOfQues));
@@ -118,8 +131,26 @@ public class MainActivity extends AppCompatActivity {
             generateSubtractionQuestion();
         if(tag==6)
             generateMultiplicationQuestion();
+        if(tag==7)
+            generateDivisionQuestion();
 
     }
+
+
+    public void correct()
+    {
+        //imageView.setVisibility(View.VISIBLE);
+        imageView.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.correct));
+    };
+
+    public void incorrect()
+    {
+        imageView.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.wrong));
+        v.vibrate(200);
+
+        //imageView.setBackgroundResource(R.drawable.wrong);
+
+    };
 
     public void generateAdditionQuestion()
     {
@@ -199,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     public void generateMultiplicationQuestion()
     {
         Random rand = new Random();
@@ -219,10 +252,44 @@ public class MainActivity extends AppCompatActivity {
             }
             else
             {
-                int incorrect_ans = rand.nextInt(200);
+                int incorrect_ans = rand.nextInt(100);
                 while(incorrect_ans==product)
                 {
-                    incorrect_ans = rand.nextInt(200);
+                    incorrect_ans = rand.nextInt(100);
+                }
+                arr.add(incorrect_ans);
+            }
+        }
+        button1.setText(Integer.toString(arr.get(0)));
+        button2.setText(Integer.toString(arr.get(1)));
+        button3.setText(Integer.toString(arr.get(2)));
+        button4.setText(Integer.toString(arr.get(3)));
+    }
+
+    public void generateDivisionQuestion()
+    {
+        Random rand = new Random();
+        int a = rand.nextInt(20);
+        int b = rand.nextInt(10);
+        int divisor = b;
+        b=a*b;
+        sumtextview.setText(Integer.toString(b)+" / "+Integer.toString(a));
+        pos_of_correct = rand.nextInt(4);
+        arr.clear();
+        for(int i=0;i<4;i++)
+        {
+            if(i==pos_of_correct)
+            {
+                //Log.i("I is", Integer.toString(i));
+                //Log.i("pos is ", Integer.toString(pos_of_correct));
+                arr.add(divisor);
+            }
+            else
+            {
+                int incorrect_ans = rand.nextInt(100);
+                while(incorrect_ans==divisor)
+                {
+                    incorrect_ans = rand.nextInt(100);
                 }
                 arr.add(incorrect_ans);
             }
@@ -251,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
         tag=4;
         add.setVisibility(Button.INVISIBLE);
         sub.setVisibility(Button.INVISIBLE);
+        div.setVisibility(Button.INVISIBLE);
         mul.setVisibility(Button.INVISIBLE);
         optionRelativeLayout.setVisibility(RelativeLayout.INVISIBLE);
         mainrelativelayout.setVisibility(RelativeLayout.VISIBLE);
@@ -263,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
         tag=5;
         add.setVisibility(Button.INVISIBLE);
         sub.setVisibility(Button.INVISIBLE);
+        div.setVisibility(Button.INVISIBLE);
         mul.setVisibility(Button.INVISIBLE);
         optionRelativeLayout.setVisibility(RelativeLayout.INVISIBLE);
         mainrelativelayout.setVisibility(RelativeLayout.VISIBLE);
@@ -276,6 +345,19 @@ public class MainActivity extends AppCompatActivity {
         add.setVisibility(Button.INVISIBLE);
         sub.setVisibility(Button.INVISIBLE);
         mul.setVisibility(Button.INVISIBLE);
+        div.setVisibility(Button.INVISIBLE);
+        mainrelativelayout.setVisibility(RelativeLayout.VISIBLE);
+        playagain(findViewById(R.id.mathsrelativeLayout));
+    }
+
+    public void division(View view)
+    {
+        //Log.i("Button: " , "Subtraction Button");
+        tag=7;
+        add.setVisibility(Button.INVISIBLE);
+        sub.setVisibility(Button.INVISIBLE);
+        mul.setVisibility(Button.INVISIBLE);
+        div.setVisibility(Button.INVISIBLE);
         mainrelativelayout.setVisibility(RelativeLayout.VISIBLE);
         playagain(findViewById(R.id.mathsrelativeLayout));
     }
@@ -314,14 +396,17 @@ public class MainActivity extends AppCompatActivity {
         add = (Button) findViewById(R.id.addition);
         sub = (Button) findViewById(R.id.subtraction);
         mul = (Button) findViewById(R.id.multiplication);
+        div = (Button) findViewById(R.id.division);
         yesbutton = (Button) findViewById(R.id.yes);
         nobutton = (Button) findViewById(R.id.no);
-        resluttextview = (TextView) findViewById(R.id.resultTextView);
+        resluttextview = (TextView) findViewById(R.id.resulttextview);
         pointtextView = (TextView) findViewById(R.id.pointsTextView);
         timertextview = (TextView) findViewById(R.id.timer);
         playgn = (TextView) findViewById(R.id.playagain);
         mainrelativelayout = (RelativeLayout) findViewById(R.id.mathsrelativeLayout);
         optionRelativeLayout = (RelativeLayout) findViewById(R.id.optionrelativlayout);
+        imageView = (ImageView) findViewById(R.id.imageView);
+        v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
 
     }
 
