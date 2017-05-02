@@ -16,22 +16,66 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/start_button"
         android:textSize="80sp"
+        android:onClick="start"
         android:paddingBottom="50dp"
         android:paddingEnd="50dp"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
+        android:id="@+id/start_button"
         android:paddingStart="50dp"
         android:paddingTop="50dp"
         android:background="@android:color/holo_green_light"
-        android:onClick="start"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mainrelativeLayout"
+        android:id="@+id/optionrelativlayout"
+        android:visibility="invisible">
+
+        <Button
+            android:text="Addition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="addition"
+            android:layout_marginTop="45dp"
+            android:id="@+id/addition"
+            android:textSize="30sp"
+            android:background="@android:color/holo_red_dark" />
+
+
+        <Button
+            android:text="Subtraction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="subtraction"
+            android:layout_marginTop="120dp"
+            android:id="@+id/subtraction"
+            android:textSize="30sp"
+            android:background="?attr/colorAccent" />
+
+
+
+        <Button
+            android:text="Multiplication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="multiplication"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/multiplication"
+            android:layout_marginTop="210dp"
+            android:textSize="30sp"
+            android:background="?android:attr/colorPressedHighlight" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mathsrelativeLayout"
         android:visibility="visible"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
@@ -110,17 +154,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
             android:id="@+id/resultTextView"
-            android:textSize="30sp" />
-
-        <Button
-            android:text="Play Again?"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/playAgainbutton"
-            android:onClick="playagain"
-            android:visibility="invisible"
-            android:layout_below="@+id/resultTextView"
-            android:layout_centerHorizontal="true" />
+            android:textSize="30sp"
+            android:background="?android:attr/statusBarColor"
+            android:textColor="@android:color/background_light"
+            android:visibility="visible" />
 
         <TextView
             android:text="12+15"
@@ -131,7 +168,8 @@
             android:padding="20dp"
             android:textColor="@android:color/background_dark"
             android:layout_alignParentTop="true"
-            android:layout_alignEnd="@+id/playAgainbutton" />
+            android:layout_alignEnd="@+id/playAgainbutton"
+            android:layout_marginLeft="130dp" />
 
         <TextView
             android:text="0s"
@@ -153,13 +191,53 @@
             android:layout_height="wrap_content"
             android:id="@+id/pointsTextView"
             android:textSize="30sp"
-            android:backgroundTint="@android:color/holo_blue_bright"
-            android:background="@android:color/holo_blue_bright"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:background="@android:color/holo_green_dark"
             android:padding="10dp"
             android:layout_alignBaseline="@+id/sumTextView"
             android:layout_alignBottom="@+id/sumTextView"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="13dp" />
+            android:layout_marginEnd="13dp"
+            android:textColor="@android:color/background_light" />
+
+        <Button
+            android:text="Yes!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/yes"
+            android:onClick="yes"
+            android:visibility="invisible"
+            android:textSize="20sp"
+            android:padding="10dp" />
+
+        <Button
+            android:text="No!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/no"
+            android:onClick="over"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            android:textSize="20sp"
+            android:padding="10dp" />
+
+        <TextView
+            android:text="Play Again ?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/no"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/playagain"
+            android:visibility="invisible"
+            android:textColorHighlight="@android:color/background_dark"
+            android:textColor="@android:color/background_dark"
+            android:background="?android:attr/colorActivatedHighlight"
+            android:textSize="40sp"
+            android:padding="10dp" />
+
     </RelativeLayout>
 
 </RelativeLayout>
