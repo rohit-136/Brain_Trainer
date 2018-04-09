@@ -2,5 +2,9 @@
 
 Basically a Quizzing app!
 
-Has questions of different categories--user gets many options and fields to choose from
+An Android App to help improve the calculation speed of the user. It allows users to
+choose between the four basic mathematical operations based on which questions are presented which are to be
+solved in a limited time frame.
+
+Used : Java, Android 
   
