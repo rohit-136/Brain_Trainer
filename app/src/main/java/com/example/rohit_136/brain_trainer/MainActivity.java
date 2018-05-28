@@ -414,9 +414,3 @@ public class MainActivity extends AppCompatActivity {
 }
 
 
-/*
-   We'll just be making it as a maths app. That has questions based on addition,subtraction,multiplication,
-   and division.
-   Ek credit ka hai yr kitna kaam karwaoge....
-
- */
